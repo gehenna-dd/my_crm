@@ -1,46 +1,1106 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocalis CRM | Студия вокала</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
-        :root { --ink:#17212b; --muted:#71808c; --line:#e6ecee; --paper:#f7f9f8; --white:#fff; --teal:#0c8278; --teal-dark:#08675f; --mint:#dff4ef; --coral:#e87862; --yellow:#f5c867; --shadow:0 12px 32px rgba(28,57,62,.07); }
-        * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font:14px 'DM Sans',sans-serif; } h1,h2,h3,p { margin:0; } button,input,select { font:inherit; } button { cursor:pointer; border:0; } .app { display:flex; min-height:100vh; }
-        aside { width:245px; background:#123f41; color:#dcebea; padding:25px 16px; display:flex; flex-direction:column; } .brand { display:flex; align-items:center; gap:11px; padding:0 12px 39px; color:#fff; font:800 20px Manrope,sans-serif; letter-spacing:-.5px; } .brand-mark { width:31px; height:31px; border-radius:10px; background:var(--yellow); color:#123f41; display:grid; place-items:center; font-size:18px; } .label { margin:0 12px 12px; color:#86b2af; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; } nav { display:grid; gap:5px; } nav button { display:flex; align-items:center; gap:13px; padding:12px; border-radius:9px; background:transparent; color:#b6d1cf; text-align:left; } nav button:hover,nav button.active { background:#1c5959; color:#fff; } nav svg { width:18px; height:18px; flex:none; } .side-bottom { margin-top:auto; border-top:1px solid #2b6060; padding:18px 11px 0; color:#9bc1bf; font-size:12px; line-height:1.5; } .profile { display:flex; gap:10px; align-items:center; margin-top:18px; color:#fff; font-weight:600; } .avatar { width:33px;height:33px;border-radius:50%;background:#ecb59d;color:#714e44;display:grid;place-items:center;font-weight:700; }
-        main { flex:1; min-width:0; padding:30px 42px 60px; max-width:1480px; } .topline { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; } .eyebrow { color:var(--teal); text-transform:uppercase; letter-spacing:1.3px; font-size:11px; font-weight:700; margin-bottom:8px; } h1 { font:800 30px Manrope,sans-serif; letter-spacing:-1px; } h2 { font:700 19px Manrope,sans-serif; } .date { display:flex; gap:9px; align-items:center; color:var(--muted); } .today { border:1px solid var(--line); padding:9px 13px; background:white; border-radius:8px; color:var(--ink); } .primary { background:var(--teal); color:#fff; padding:11px 16px; border-radius:8px; font-weight:700; } .primary:hover { background:var(--teal-dark); }
-        .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:15px; margin-bottom:27px; } .stat { background:var(--white); border:1px solid var(--line); border-radius:10px; padding:18px 20px; box-shadow:var(--shadow); position:relative; overflow:hidden; } .stat:after { content:''; position:absolute; width:72px;height:72px;border-radius:50%;background:var(--mint);right:-23px;top:-23px; } .stat:nth-child(2):after{background:#fff0d0}.stat:nth-child(3):after{background:#fbe2dc}.stat:nth-child(4):after{background:#e6e4f7}.stat-title{color:var(--muted);font-size:12px;margin-bottom:14px;position:relative;z-index:1}.stat-value{font:800 25px Manrope;position:relative;z-index:1}.stat-note{color:var(--teal);font-size:11px;margin-top:8px;position:relative;z-index:1}
-        .grid { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(310px,.7fr); gap:20px; } .panel { background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); padding:21px; margin-bottom:20px; } .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px}.subtle{color:var(--muted);font-size:12px}.link{background:none;color:var(--teal);font-weight:700;font-size:12px}
-        .lesson { display:grid; grid-template-columns:72px minmax(0,1fr) auto; align-items:center; gap:15px; padding:14px 0; border-top:1px solid var(--line); } .lesson:first-of-type{border-top:0}.time{font:700 13px Manrope}.lesson-info{min-width:0}.lesson-info strong{display:block;margin-bottom:4px;overflow-wrap:anywhere}.lesson-info>span{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pill{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700}.pill.green{color:#147268;background:#e2f4ee}.pill.orange{color:#9b6b17;background:#fff2d3}.pill.gray{color:#7c8990;background:#eef1f1}.lesson .pill{margin-left:8px}
-        .week { display:grid; grid-template-columns:repeat(7,1fr); gap:7px; margin:0 0 16px; }.day { text-align:center;padding:9px 3px;border-radius:8px;color:var(--muted);font-size:11px}.day b{display:block;color:var(--ink);font-size:16px;margin-top:5px}.day.active{background:var(--teal);color:#a7ddd7}.day.active b{color:#fff}.mini-lesson{padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}.mini-lesson:last-child{border:0}.mini-lesson b{display:block;margin-bottom:4px}.mini-lesson span{color:var(--muted)}
-        .table-wrap { overflow:auto; }.table { width:100%; border-collapse:collapse; min-width:560px; }.table th{text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;padding:9px 10px;border-bottom:1px solid var(--line)}.table td{padding:13px 10px;border-bottom:1px solid var(--line);font-size:13px}.table tr:last-child td{border-bottom:0}.student{display:flex;align-items:center;gap:9px;font-weight:600}.student .avatar{width:29px;height:29px;font-size:11px}.count{font-weight:700}.action{background:#edf7f5;color:var(--teal);padding:7px 9px;border-radius:6px;font-size:11px;font-weight:700}.action:hover{background:var(--mint)}.action.cancel{background:#fff0ed;color:#b85f4d;margin-left:5px}.action.cancel:hover{background:#fbe2dc}.action.edit{background:#eef0f8;color:#59628b;margin-left:5px}.action.delete{background:#fff0ed;color:#b85f4d;margin-left:5px}.action.edit:hover{background:#e2e5f3}.action.delete:hover{background:#fbe2dc}.row-actions{display:flex;flex-wrap:wrap;gap:4px}
-        .empty { text-align:center;padding:45px 10px;color:var(--muted); } .hidden { display:none!important; } .modal-back { position:fixed;inset:0;background:rgba(10,34,35,.4);display:grid;place-items:center;padding:20px;z-index:5}.modal{background:white;border-radius:12px;width:min(500px,100%);padding:25px;box-shadow:0 20px 60px #123f4140}.modal-head{display:flex;justify-content:space-between;margin-bottom:22px}.close{background:#eef3f2;border-radius:50%;width:29px;height:29px;color:var(--muted);font-size:18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700}.field input,.field select{border:1px solid #dce5e4;border-radius:7px;padding:10px 11px;outline-color:var(--teal)}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:23px}.secondary{background:#edf1f1;color:var(--ink);padding:11px 15px;border-radius:8px;font-weight:700}
-        .view { display:none; }.view.active{display:block}.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.search{border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 12px;width:220px;outline-color:var(--teal)}
-        @media(max-width:900px){.app{display:block}aside{position:fixed;z-index:4;bottom:0;left:0;width:100%;height:72px;padding:6px 10px;background:#123f41;box-shadow:0 -8px 25px rgba(18,63,65,.18)}.brand,.label,.side-bottom{display:none}nav{width:100%;height:100%;grid-template-columns:repeat(4,1fr);gap:4px}nav button{justify-content:center;align-items:center;flex-direction:column;gap:3px;padding:6px 3px;border-radius:8px;font-size:10px;font-weight:600}nav button span:first-child{font-size:18px;line-height:1}nav button span:last-child{display:block}nav svg{width:20px;height:20px}main{width:100%;max-width:none;padding:25px 22px 96px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}} @media(max-width:560px){main{padding:20px 14px 96px;overflow-x:hidden}.topline{align-items:flex-start;gap:12px}.topline .date{display:none}h1{font-size:24px}.stats{gap:9px}.stat{padding:14px}.stat-value{font-size:20px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:16px}.toolbar{align-items:stretch;gap:10px;flex-direction:column}.search{width:100%}.lesson{grid-template-columns:52px minmax(0,1fr);gap:10px;padding:13px 0}.lesson>div:last-child{grid-column:2;display:flex;flex-wrap:wrap;gap:5px}.lesson .action.cancel{margin-left:0}}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>CRM Репетитора</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f5f7fb;
+      color: #1e293b;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+   
+    /* Шапка */
+    .mobile-header {
+      background: white;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      z-index: 100;
+      min-height: 56px;
+    }
+    .mobile-header h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .header-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+    }
+   
+    /* Контент */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+   
+    /* Нижняя навигация */
+    .bottom-nav {
+      background: white;
+      display: flex;
+      border-top: 1px solid #e2e8f0;
+      padding: 6px 8px;
+      padding-bottom: max(6px, env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 4px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.7rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: 0.2s;
+      gap: 4px;
+    }
+    .nav-item i {
+      font-size: 1.3rem;
+    }
+    .nav-item.active {
+      color: #2563eb;
+      background: #eff6ff;
+    }
+   
+    /* Карточки статистики */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat-card {
+      background: white;
+      padding: 14px;
+      border-radius: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .stat-card .stat-label {
+      font-size: 0.7rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-card .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+   
+    /* Панель */
+    .panel {
+      background: white;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+   
+    /* Фильтры */
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-chip {
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.2s;
+    }
+    .filter-chip.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+    select.filter-select {
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      max-width: 150px;
+    }
+   
+    /* Список занятий */
+    .lesson-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.2s;
+    }
+    .lesson-card.completed {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .lesson-card.cancelled {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      opacity: 0.7;
+    }
+    .lesson-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .lesson-info .name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+    .lesson-info .meta {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+    .lesson-info .topic {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+    .status-dot.planned { background: #3b82f6; }
+    .status-dot.completed { background: #10b981; }
+    .status-dot.cancelled { background: #ef4444; }
+   
+    .lesson-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+    .btn-complete {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .btn-cancel {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .btn-restore {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .btn-edit {
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .btn-delete {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+   
+    /* Календарь */
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .cal-nav button {
+      background: #f1f5f9;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .cal-nav .month-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+    .day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.15s;
+      position: relative;
+    }
+    .day-cell:active {
+      transform: scale(0.9);
+    }
+    .day-cell.today {
+      background: #2563eb;
+      color: white;
+      font-weight: 700;
+    }
+    .day-cell.selected {
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+    .day-cell.has-lesson::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      width: 5px;
+      height: 5px;
+      background: #2563eb;
+      border-radius: 50%;
+    }
+    .day-cell.today.has-lesson::after {
+      background: white;
+    }
+    .day-cell.other {
+      opacity: 0.3;
+    }
+   
+    /* Модальное окно */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 20px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+    }
+    .modal h3 {
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+    }
+    .modal input, .modal select {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: #f8fafc;
+    }
+    .modal .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .modal .btn-row button {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-save {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-cancel-modal {
+      background: #f1f5f9;
+      color: #475569;
+    }
+   
+    .hidden {
+      display: none !important;
+    }
+   
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 500;
+      z-index: 2000;
+      font-size: 0.85rem;
+      animation: fadeInUp 0.3s ease;
+      white-space: nowrap;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+   
+    /* Таблицы (для учеников и абонементов) */
+    .list-item {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 8px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .list-item .info {
+      flex: 1;
+    }
+    .list-item .name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .list-item .sub {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge.planned { background: #dbeafe; color: #1e40af; }
+    .badge.completed { background: #dcfce7; color: #166534; }
+    .badge.cancelled { background: #fee2e2; color: #991b1b; }
+    .badge.warning { background: #fef3c7; color: #92400e; }
+    .badge.success { background: #dcfce7; color: #166534; }
+   
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: #94a3b8;
+    }
+    .empty-state i {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-<div class="app"><aside><div class="brand"><span class="brand-mark">♫</span>Vocalis</div><div class="label">Рабочее пространство</div><nav><button type="button" class="active" data-view="dashboard"><span>▦</span><span>Обзор</span></button><button type="button" data-view="students"><span>♙</span><span>Ученики</span></button><button type="button" data-view="schedule"><span>□</span><span>Расписание</span></button><button type="button" data-view="payments"><span>▣</span><span>Оплаты</span></button></nav><div class="side-bottom">Январь 2025<br>Данные сохраняются автоматически<div class="profile"><span class="avatar">ЯЛ</span><div>Яна Луценко<br><small>Преподаватель</small></div></div></div></aside>
-<main><section id="dashboard" class="view active"><div class="topline"><div><div class="eyebrow">Среда, 15 января 2025</div><h1>Добрый день, Яна</h1></div><div class="date"><span class="today">Январь 2025</span><button class="primary" onclick="openModal('lesson')">+ Новое занятие</button></div></div><div class="stats"><div class="stat"><div class="stat-title">Доход за январь</div><div class="stat-value" id="income">0 ₽</div><div class="stat-note">● оплаченные занятия</div></div><div class="stat"><div class="stat-title">Занятий проведено</div><div class="stat-value" id="completed">0</div><div class="stat-note">из запланированных</div></div><div class="stat"><div class="stat-title">Активных учеников</div><div class="stat-value" id="activeStudents">0</div><div class="stat-note">на текущий момент</div></div><div class="stat"><div class="stat-title">Нужно списать</div><div class="stat-value" id="toCharge">0</div><div class="stat-note">занятий сегодня</div></div></div><div class="grid"><div><div class="panel"><div class="panel-head"><h2>Ближайшие занятия</h2><button class="link" onclick="switchView('schedule')">Всё расписание →</button></div><div id="upcoming"></div></div><div class="panel"><div class="panel-head"><h2>Абонементы учеников</h2><button class="link" onclick="switchView('students')">Все ученики →</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Ученик</th><th>Абонемент</th><th>Осталось</th><th>Действие</th></tr></thead><tbody id="dashStudents"></tbody></table></div></div></div><div><div class="panel"><div class="panel-head"><h2>Сегодня</h2><span class="subtle">15 января</span></div><div class="week"><div class="day">Пн<b>13</b></div><div class="day">Вт<b>14</b></div><div class="day active">Ср<b>15</b></div><div class="day">Чт<b>16</b></div><div class="day">Пт<b>17</b></div><div class="day">Сб<b>18</b></div><div class="day">Вс<b>19</b></div></div><div id="todayList"></div></div><div class="panel"><div class="panel-head"><h2>Сводка месяца</h2><span class="subtle">Январь</span></div><div style="display:flex;justify-content:space-between;margin-bottom:10px"><span class="subtle">Проведено занятий</span><b id="monthLessons">0</b></div><div style="height:8px;background:#edf2f1;border-radius:5px;margin-bottom:16px"><div id="progress" style="height:100%;width:0;background:var(--teal);border-radius:5px"></div></div><div style="display:flex;justify-content:space-between"><span class="subtle">Средний чек</span><b id="average">0 ₽</b></div></div></div></div></section>
-<section id="students" class="view"><div class="topline"><div><div class="eyebrow">Клиентская база</div><h1>Ученики</h1></div><button class="primary" onclick="openModal('student')">+ Добавить ученика</button></div><div class="panel"><div class="toolbar"><h2>Все ученики <span class="subtle" id="studentCount"></span></h2><input class="search" id="search" placeholder="Поиск ученика..." oninput="renderStudents(this.value)"></div><div class="table-wrap"><table class="table"><thead><tr><th>Ученик</th><th>Телефон</th><th>Абонемент</th><th>Осталось</th><th>Стоимость</th><th></th></tr></thead><tbody id="studentsTable"></tbody></table></div></div></section>
-<section id="schedule" class="view"><div class="topline"><div><div class="eyebrow">План занятий</div><h1>Расписание</h1></div><button class="primary" onclick="openModal('lesson')">+ Новое занятие</button></div><div class="panel"><div class="panel-head"><h2>Январь 2025</h2><span class="subtle">Все занятия</span></div><div id="scheduleList"></div></div></section>
-<section id="payments" class="view"><div class="topline"><div><div class="eyebrow">Финансы</div><h1>Оплаты</h1></div><button class="primary" onclick="openModal('payment')">+ Записать оплату</button></div><div class="stats"><div class="stat"><div class="stat-title">Получено за месяц</div><div class="stat-value" id="income2">0 ₽</div></div><div class="stat"><div class="stat-title">Ожидается</div><div class="stat-value">0 ₽</div></div></div><div class="panel"><div class="panel-head"><h2>История операций</h2></div><div id="paymentList"></div></div></section></main></div>
-<div class="modal-back hidden" id="modal"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Новое занятие</h2><button class="close" onclick="closeModal()">×</button></div><form id="form"></form></div></div>
-<script>
-const seed={students:[{id:1,name:'Мария Соколова',phone:'+7 912 345-67-89',pack:'Индивидуальный',left:6,total:8,price:24000,initials:'МС',color:'#f4c8aa'},{id:2,name:'Илья Петров',phone:'+7 903 111-22-33',pack:'Базовый',left:2,total:4,price:12000,initials:'ИП',color:'#b9d9d0'},{id:3,name:'София Романова',phone:'+7 916 444-55-66',pack:'Индивидуальный',left:4,total:8,price:24000,initials:'СР',color:'#d8c8ee'},{id:4,name:'Алексей Волков',phone:'+7 999 777-88-99',pack:'Пробный',left:1,total:1,price:3500,initials:'АВ',color:'#f1df9b'}],lessons:[{id:1,date:'15 января',time:'10:00',student:1,status:'Запланировано',kind:'Индивидуальное занятие'},{id:2,date:'15 января',time:'12:30',student:2,status:'Запланировано',kind:'Индивидуальное занятие'},{id:3,date:'15 января',time:'18:00',student:3,status:'Проведено',kind:'Индивидуальное занятие'},{id:4,date:'16 января',time:'11:00',student:4,status:'Запланировано',kind:'Пробное занятие'}],payments:[{student:1,amount:24000,date:'10 января',note:'Абонемент · 8 занятий'},{student:3,amount:24000,date:'4 января',note:'Абонемент · 8 занятий'}]};let data=JSON.parse(localStorage.getItem('vocalis-crm')||'null')||seed;const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽',student=id=>data.students.find(s=>s.id==id),save=()=>localStorage.setItem('vocalis-crm',JSON.stringify(data));const incomeEl=document.getElementById('income'),income2=document.getElementById('income2'),completed=document.getElementById('completed'),activeStudents=document.getElementById('activeStudents'),toCharge=document.getElementById('toCharge'),monthLessons=document.getElementById('monthLessons'),average=document.getElementById('average'),progress=document.getElementById('progress'),upcoming=document.getElementById('upcoming'),todayList=document.getElementById('todayList'),dashStudents=document.getElementById('dashStudents'),scheduleList=document.getElementById('scheduleList'),studentCount=document.getElementById('studentCount'),studentsTable=document.getElementById('studentsTable'),paymentList=document.getElementById('paymentList'),modal=document.getElementById('modal'),modalTitle=document.getElementById('modalTitle'),form=document.getElementById('form');
-function render(){let done=data.lessons.filter(l=>l.status==='Проведено').length,income=data.payments.reduce((a,p)=>a+p.amount,0);incomeEl.textContent=money(income);income2.textContent=money(income);completed.textContent=done;activeStudents.textContent=data.students.length;toCharge.textContent=data.lessons.filter(l=>l.date==='15 января'&&l.status==='Запланировано').length;monthLessons.textContent=done;average.textContent=money(done?Math.round(income/done):0);progress.style.width=Math.min(done/12*100,100)+'%';renderUpcoming();renderStudents();renderPayments()}
-function lessonRow(l){let s=student(l.student);return `<div class="lesson"><div class="time">${l.time}</div><div class="lesson-info"><strong>${s.name} <span class="pill ${l.status==='Проведено'?'green':l.status==='Отменено'?'gray':'orange'}">${l.status}</span></strong><span>${l.kind}</span></div>${l.status==='Запланировано'?`<div><button class="action" onclick="completeLesson(${l.id})">Списать</button><button class="action cancel" onclick="cancelLesson(${l.id})">Отменить</button></div>`:''}</div>`}function renderUpcoming(){upcoming.innerHTML=data.lessons.slice(0,4).map(lessonRow).join('')||'<div class="empty">Занятий пока нет</div>';todayList.innerHTML=data.lessons.filter(l=>l.date==='15 января').map(l=>`<div class="mini-lesson"><b>${l.time} · ${student(l.student).name}</b><span>${l.status}</span></div>`).join('')||'<div class="empty">Свободный день</div>';dashStudents.innerHTML=data.students.slice(0,4).map(s=>`<tr><td><div class="student"><span class="avatar" style="background:${s.color}">${s.initials}</span>${s.name}</div></td><td>${s.pack}</td><td><span class="count">${s.left} / ${s.total}</span></td><td><button class="action" onclick="openModal('lesson',${s.id})">Списать</button></td></tr>`).join('');scheduleList.innerHTML=data.lessons.map(lessonRow).join('')}function renderStudents(query=''){let list=data.students.filter(s=>s.name.toLowerCase().includes(query.toLowerCase()));studentCount.textContent=`· ${list.length}`;studentsTable.innerHTML=list.map(s=>`<tr><td><div class="student"><span class="avatar" style="background:${s.color}">${s.initials}</span>${s.name}</div></td><td>${s.phone}</td><td>${s.pack}</td><td><span class="pill ${s.left<=2?'orange':'green'}">${s.left} из ${s.total}</span></td><td>${money(s.price)}</td><td><button class="action" onclick="openModal('lesson',${s.id})">Списать занятие</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Ничего не найдено</td></tr>'}function renderPayments(){paymentList.innerHTML=data.payments.map(p=>`<div class="lesson"><div class="time">${p.date}</div><div class="lesson-info"><strong>${student(p.student).name}</strong><span>${p.note}</span></div><b>${money(p.amount)}</b></div>`).join('')||'<div class="empty">Операций пока нет</div>'}
-function switchView(view){let target=document.getElementById(view)||document.getElementById('dashboard');let nextView=target.id;document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-view')===nextView));if(window.location.hash!=='#'+nextView)window.location.hash=nextView;window.scrollTo(0,0)}function loadViewFromHash(){let view=window.location.hash.slice(1)||'dashboard',target=document.getElementById(view)||document.getElementById('dashboard');document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-view')===target.id));window.scrollTo(0,0)}document.querySelectorAll('nav button').forEach(button=>{let open=()=>switchView(button.getAttribute('data-view'));button.addEventListener('click',open,false);button.addEventListener('touchend',open,false)});window.addEventListener('hashchange',loadViewFromHash,false);loadViewFromHash();
-function openModal(type,selected){let title=type==='student'?'Новый ученик':type==='payment'?'Новая оплата':'Новое занятие';modalTitle.textContent=title;let options=data.students.map(s=>`<option value="${s.id}" ${s.id==selected?'selected':''}>${s.name}</option>`).join('');let html=type==='student'?`<div class="form-grid"><div class="field full"><label>Имя и фамилия</label><input name="name" required placeholder="Например, Елена Смирнова"></div><div class="field"><label>Телефон</label><input name="phone" placeholder="+7 ..."></div><div class="field"><label>Тип абонемента</label><select name="pack"><option>Базовый</option><option>Индивидуальный</option><option>Пробный</option></select></div><div class="field"><label>Всего занятий</label><input name="total" type="number" min="1" value="4"></div><div class="field"><label>Стоимость, ₽</label><input name="price" type="number" min="0" value="12000"></div></div>`:type==='payment'?`<div class="form-grid"><div class="field full"><label>Ученик</label><select name="student">${options}</select></div><div class="field"><label>Сумма, ₽</label><input name="amount" type="number" required value="12000"></div><div class="field"><label>Дата</label><input name="date" value="15 января"></div><div class="field full"><label>Комментарий</label><input name="note" value="Абонемент"></div></div>`:`<div class="form-grid"><div class="field full"><label>Ученик</label><select name="student">${options}</select></div><div class="field"><label>Дата</label><input name="date" required value="15 января"></div><div class="field"><label>Время</label><input name="time" type="time" required value="10:00"></div><div class="field full"><label>Формат</label><select name="kind"><option>Индивидуальное занятие</option><option>Пробное занятие</option><option>Онлайн-занятие</option></select></div></div>`;form.innerHTML=html+`<div class="modal-actions"><button type="button" class="secondary" onclick="closeModal()">Отмена</button><button class="primary">Сохранить</button></div>`;form.onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);if(type==='student'){let name=f.get('name'),initials=name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();data.students.push({id:Date.now(),name,phone:f.get('phone'),pack:f.get('pack'),left:+f.get('total'),total:+f.get('total'),price:+f.get('price'),initials,color:'#b9d9d0'})}else if(type==='payment'){data.payments.unshift({student:+f.get('student'),amount:+f.get('amount'),date:f.get('date'),note:f.get('note')})}else data.lessons.push({id:Date.now(),date:f.get('date'),time:f.get('time'),student:+f.get('student'),status:'Запланировано',kind:f.get('kind')});save();render();closeModal()};modal.classList.remove('hidden')}function closeModal(){modal.classList.add('hidden')}function completeLesson(id){let l=data.lessons.find(x=>x.id===id),s=student(l.student);if(s.left>0){s.left--;l.status='Проведено';save();render()}else alert('У ученика закончился абонемент. Сначала запишите новую оплату.')}function cancelLesson(id){let l=data.lessons.find(x=>x.id===id);if(l&&l.status==='Запланировано'){l.status='Отменено';save();render()}}render();
-/* CRUD extensions */
-function actionButtons(type,id){return `<div class="row-actions"><button class="action edit" onclick="openEditor('${type}',${id})">Изменить</button><button class="action delete" onclick="deleteRecord('${type}',${id})">Удалить</button></div>`}
-function lessonRow(l){let s=student(l.student);return `<div class="lesson"><div class="time">${l.time}</div><div class="lesson-info"><strong>${s?s.name:'Удалённый ученик'} <span class="pill ${l.status==='Проведено'?'green':l.status==='Отменено'?'gray':'orange'}">${l.status}</span></strong><span>${l.kind}</span></div>${l.status==='Запланировано'?`<div class="row-actions"><button class="action" onclick="completeLesson(${l.id})">Списать</button><button class="action cancel" onclick="cancelLesson(${l.id})">Отменить</button>${actionButtons('lesson',l.id)}</div>`:`${actionButtons('lesson',l.id)}`}</div>`}
-function renderUpcoming(){upcoming.innerHTML=data.lessons.slice(0,4).map(lessonRow).join('')||'<div class="empty">Занятий пока нет</div>';todayList.innerHTML=data.lessons.filter(l=>l.date==='15 января').map(l=>`<div class="mini-lesson"><b>${l.time} · ${student(l.student).name}</b><span>${l.status}</span></div>`).join('')||'<div class="empty">Свободный день</div>';dashStudents.innerHTML=data.students.slice(0,4).map(s=>`<tr><td><div class="student"><span class="avatar" style="background:${s.color}">${s.initials}</span>${s.name}</div></td><td>${s.pack}</td><td><span class="count">${s.left} / ${s.total}</span></td><td class="row-actions"><button class="action" onclick="openModal('lesson',${s.id})">Списать</button><button class="action edit" onclick="openEditor('student',${s.id})">Изменить</button></td></tr>`).join('');scheduleList.innerHTML=data.lessons.map(lessonRow).join('')}
-function renderStudents(query=''){let list=data.students.filter(s=>s.name.toLowerCase().includes(query.toLowerCase()));studentCount.textContent=`· ${list.length}`;studentsTable.innerHTML=list.map(s=>`<tr><td><div class="student"><span class="avatar" style="background:${s.color}">${s.initials}</span>${s.name}</div></td><td>${s.phone}</td><td>${s.pack}</td><td><span class="pill ${s.left<=2?'orange':'green'}">${s.left} из ${s.total}</span></td><td>${money(s.price)}</td><td><div class="row-actions"><button class="action" onclick="openModal('lesson',${s.id})">Списать</button><button class="action edit" onclick="openEditor('student',${s.id})">Изменить</button><button class="action delete" onclick="deleteRecord('student',${s.id})">Удалить</button></div></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Ничего не найдено</td></tr>'}
-function renderPayments(){paymentList.innerHTML=data.payments.map((p,i)=>`<div class="lesson"><div class="time">${p.date}</div><div class="lesson-info"><strong>${student(p.student).name}</strong><span>${p.note}</span></div><div class="row-actions"><b>${money(p.amount)}</b><button class="action edit" onclick="openEditor('payment',${i})">Изменить</button><button class="action delete" onclick="deleteRecord('payment',${i})">Удалить</button></div></div>`).join('')||'<div class="empty">Операций пока нет</div>'}
-function openEditor(type,id){let item=type==='student'?student(id):type==='lesson'?data.lessons.find(l=>l.id===id):data.payments[id];openModal(type+'-edit',item)}
-function openModal(type,selected){let editing=type.endsWith('-edit'),baseType=editing?type.slice(0,-5):type,item=selected||{},title=editing?(baseType==='student'?'Изменить ученика':baseType==='lesson'?'Изменить занятие':'Изменить оплату'):(baseType==='student'?'Новый ученик':baseType==='payment'?'Новая оплата':'Новое занятие');modalTitle.textContent=title;let options=data.students.map(s=>`<option value="${s.id}" ${s.id==item.student?'selected':''}>${s.name}</option>`).join('');let html=baseType==='student'?`<div class="form-grid"><div class="field full"><label>Имя и фамилия</label><input name="name" required value="${item.name||''}" placeholder="Например, Елена Смирнова"></div><div class="field"><label>Телефон</label><input name="phone" value="${item.phone||''}" placeholder="+7 ..."></div><div class="field"><label>Тип абонемента</label><select name="pack"><option ${item.pack==='Базовый'?'selected':''}>Базовый</option><option ${item.pack==='Индивидуальный'?'selected':''}>Индивидуальный</option><option ${item.pack==='Пробный'?'selected':''}>Пробный</option></select></div><div class="field"><label>Осталось занятий</label><input name="left" type="number" min="0" value="${item.left??4}"></div><div class="field"><label>Всего занятий</label><input name="total" type="number" min="1" value="${item.total??4}"></div><div class="field"><label>Стоимость, ₽</label><input name="price" type="number" min="0" value="${item.price??12000}"></div></div>`:baseType==='payment'?`<div class="form-grid"><div class="field full"><label>Ученик</label><select name="student">${options}</select></div><div class="field"><label>Сумма, ₽</label><input name="amount" type="number" required value="${item.amount??12000}"></div><div class="field"><label>Дата</label><input name="date" value="${item.date||'15 января'}"></div><div class="field full"><label>Комментарий</label><input name="note" value="${item.note||'Абонемент'}"></div></div>`:`<div class="form-grid"><div class="field full"><label>Ученик</label><select name="student">${options}</select></div><div class="field"><label>Дата</label><input name="date" required value="${item.date||'15 января'}"></div><div class="field"><label>Время</label><input name="time" type="time" required value="${item.time||'10:00'}"></div><div class="field full"><label>Формат</label><select name="kind"><option ${item.kind==='Индивидуальное занятие'?'selected':''}>Индивидуальное занятие</option><option ${item.kind==='Пробное занятие'?'selected':''}>Пробное занятие</option><option ${item.kind==='Онлайн-занятие'?'selected':''}>Онлайн-занятие</option></select></div><div class="field full"><label>Статус</label><select name="status"><option ${item.status==='Запланировано'?'selected':''}>Запланировано</option><option ${item.status==='Проведено'?'selected':''}>Проведено</option><option ${item.status==='Отменено'?'selected':''}>Отменено</option></select></div></div>`;form.innerHTML=html+`<div class="modal-actions"><button type="button" class="secondary" onclick="closeModal()">Отмена</button><button class="primary">Сохранить</button></div>`;form.onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);if(baseType==='student'){let name=f.get('name'),updated={...item,name,phone:f.get('phone'),pack:f.get('pack'),left:+f.get('left'),total:+f.get('total'),price:+f.get('price'),initials:name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase(),color:item.color||'#b9d9d0'};if(editing)Object.assign(item,updated);else data.students.push({...updated,id:Date.now()})}else if(baseType==='payment'){let updated={student:+f.get('student'),amount:+f.get('amount'),date:f.get('date'),note:f.get('note')};if(editing)Object.assign(item,updated);else data.payments.unshift(updated)}else{let updated={student:+f.get('student'),date:f.get('date'),time:f.get('time'),kind:f.get('kind'),status:f.get('status')};if(editing)Object.assign(item,updated);else data.lessons.push({...updated,id:Date.now()})}save();render();closeModal()};modal.classList.remove('hidden')}
-function deleteRecord(type,id){if(!confirm('Удалить эту запись? Действие нельзя отменить.'))return;if(type==='student'){data.students=data.students.filter(s=>s.id!==id);data.lessons=data.lessons.filter(l=>l.student!==id);data.payments=data.payments.filter(p=>p.student!==id)}else if(type==='lesson')data.lessons=data.lessons.filter(l=>l.id!==id);else data.payments.splice(id,1);save();render()}
-render();
-</script></body></html>
+  <!-- Шапка -->
+  <div class="mobile-header">
+    <h1 id="pageTitle">📊 Дашборд</h1>
+    <button class="header-btn" onclick="openLessonModal()">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+  <!-- Основной контент -->
+  <div class="main-content" id="mainContent"></div>
+  <!-- Нижняя навигация -->
+  <div class="bottom-nav">
+    <button class="nav-item active" data-view="dashboard">
+      <i class="fas fa-home"></i>
+      <span>Главная</span>
+    </button>
+    <button class="nav-item" data-view="students">
+      <i class="fas fa-users"></i>
+      <span>Ученики</span>
+    </button>
+    <button class="nav-item" data-view="calendar">
+      <i class="fas fa-calendar"></i>
+      <span>Календарь</span>
+    </button>
+    <button class="nav-item" data-view="abonements">
+      <i class="fas fa-ticket-alt"></i>
+      <span>Абонементы</span>
+    </button>
+  </div>
+  <!-- Модальное окно -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div class="modal" id="modalContent"></div>
+  </div>
+ 
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)">
+  <script>
+    (function() {
+      const STORAGE_KEY = 'tutor_crm_mobile_v1';
+      let data = { students: [], lessons: [], abonements: [] };
+      let currentView = 'dashboard';
+      let calYear, calMonth, selectedDate = new Date().toISOString().split('T')[0];
+      let dashFilter = { period: 'upcoming', studentId: 'all' };
+
+      // Безопасный доступ к localStorage (в песочнице/iframe может быть запрещён)
+      const memoryStore = {};
+      function canUseStorage() {
+        try {
+          const k = '__crm_test__';
+          localStorage.setItem(k, '1');
+          localStorage.removeItem(k);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+      const useStorage = canUseStorage();
+
+      function storageGet(key) {
+        if (useStorage) {
+          try { return localStorage.getItem(key); } catch (e) { return memoryStore[key] || null; }
+        }
+        return memoryStore[key] || null;
+      }
+      function storageSet(key, value) {
+        if (useStorage) {
+          try { localStorage.setItem(key, value); return; } catch (e) {}
+        }
+        memoryStore[key] = value;
+      }
+
+      // Загрузка данных
+      function loadData() {
+        const saved = storageGet(STORAGE_KEY);
+        if (saved) {
+          try { data = JSON.parse(saved); } catch(e) {}
+        }
+        // Миграция
+        if (!data.students?.length && !data.lessons?.length) {
+          for (const k of ['tutor_crm_data_v3', 'tutor_crm_data_v2', 'tutor_crm_data']) {
+            const old = storageGet(k);
+            if (old) {
+              try {
+                const p = JSON.parse(old);
+                data.students = p.students || [];
+                data.lessons = p.lessons || [];
+                data.abonements = p.abonements || [];
+                break;
+              } catch(e) {}
+            }
+          }
+        }
+        if (!data.students) data.students = [];
+        if (!data.lessons) data.lessons = [];
+        if (!data.abonements) data.abonements = [];
+       
+        if (!data.students.length && !data.lessons.length) {
+          data.students = [
+            { id: 's1', name: 'Анна Смирнова', phone: '+79161234567', email: 'anna@mail.ru' },
+            { id: 's2', name: 'Иван Петров', phone: '+79261234568', email: 'ivan@mail.ru' }
+          ];
+          data.abonements = [
+            { id: 'a1', studentId: 's1', totalLessons: 8, usedLessons: 3, purchaseDate: '2026-06-01', expiry: '2026-08-01' },
+            { id: 'a2', studentId: 's2', totalLessons: 4, usedLessons: 1, purchaseDate: '2026-06-10', expiry: '2026-07-10' }
+          ];
+          const today = new Date().toISOString().split('T')[0];
+          data.lessons = [
+            { id: 'l1', studentId: 's1', date: today, time: '15:00', topic: 'Математика ЕГЭ', status: 'planned' },
+            { id: 'l2', studentId: 's2', date: today, time: '17:00', topic: 'Английский', status: 'planned' }
+          ];
+        }
+        saveData();
+      }
+      function saveData() {
+        storageSet(STORAGE_KEY, JSON.stringify(data));
+      }
+      function toast(msg) {
+        const t = document.querySelector('.toast');
+        if (t) t.remove();
+        const el = document.createElement('div');
+        el.className = 'toast';
+        el.textContent = msg;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2000);
+      }
+      function getStudent(id) { return data.students.find(s => s.id === id); }
+      function genId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+      // Фильтрация
+      function filterLessons(lessons) {
+        let f = [...lessons];
+        if (dashFilter.studentId !== 'all') f = f.filter(l => l.studentId === dashFilter.studentId);
+        const today = new Date().toISOString().split('T')[0];
+        switch(dashFilter.period) {
+          case 'today': f = f.filter(l => l.date === today); break;
+          case 'week':
+            const we = new Date(); we.setDate(we.getDate() + 7);
+            f = f.filter(l => l.date >= today && l.date <= we.toISOString().split('T')[0]);
+            break;
+          case 'past': f = f.filter(l => l.date < today); break;
+          case 'all': break;
+          default: f = f.filter(l => l.date >= today);
+        }
+        return f.sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+      }
+      // Навигация
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderView(this.dataset.view);
+        });
+      });
+      function renderView(view) {
+        currentView = view;
+        switch(view) {
+          case 'dashboard': renderDashboard(); break;
+          case 'students': renderStudents(); break;
+          case 'calendar': renderCalendar(); break;
+          case 'abonements': renderAbonements(); break;
+        }
+      }
+      // ====== ДАШБОРД ======
+      function renderDashboard() {
+        document.getElementById('pageTitle').textContent = '📊 Дашборд';
+        const totalStudents = data.students.length;
+        const activeAb = data.abonements.filter(a => (a.totalLessons - a.usedLessons) > 0).length;
+        const today = new Date().toISOString().split('T')[0];
+        const todayLessons = data.lessons.filter(l => l.date === today).length;
+        const completed = data.lessons.filter(l => l.status === 'completed').length;
+       
+        const filtered = filterLessons(data.lessons);
+        const studentOpts = data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        document.getElementById('mainContent').innerHTML = `
+          <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+            <button class="filter-chip" onclick="exportData()">📥 Скачать</button>
+            <button class="filter-chip" onclick="document.getElementById('importFile').click()">📤 Загрузить</button>
+            <button class="filter-chip" onclick="clearFinishedLessons()" style="border-color:#fca5a5; color:#b91c1c;">🗑️ Очистить проведённые</button>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-label">Учеников</div><div class="stat-value">${totalStudents}</div></div>
+            <div class="stat-card"><div class="stat-label">Абонементы</div><div class="stat-value">${activeAb}</div></div>
+            <div class="stat-card"><div class="stat-label">Сегодня</div><div class="stat-value">${todayLessons}</div></div>
+            <div class="stat-card"><div class="stat-label">Проведено</div><div class="stat-value">${completed}</div></div>
+          </div>
+          <div class="panel">
+            <div class="filter-row" style="margin-bottom:10px;">
+              <button class="filter-chip ${dashFilter.period==='upcoming'?'active':''}" onclick="setDashFilter('period','upcoming')">Предстоящие</button>
+              <button class="filter-chip ${dashFilter.period==='today'?'active':''}" onclick="setDashFilter('period','today')">Сегодня</button>
+              <button class="filter-chip ${dashFilter.period==='week'?'active':''}" onclick="setDashFilter('period','week')">Неделя</button>
+              <button class="filter-chip ${dashFilter.period==='past'?'active':''}" onclick="setDashFilter('period','past')">Прошедшие</button>
+            </div>
+            <select class="filter-select" onchange="setDashFilter('studentId', this.value)" style="width:100%; margin-bottom:10px;">
+              <option value="all">👥 Все ученики</option>
+              ${studentOpts}
+            </select>
+            <div id="lessonsContainer">
+              ${renderLessonCards(filtered)}
+            </div>
+          </div>`;
+       
+        // Установить значения селекта
+        const sel = document.querySelector('.filter-select');
+        if (sel) sel.value = dashFilter.studentId;
+      }
+      window.setDashFilter = function(key, value) {
+        dashFilter[key] = value;
+        renderDashboard();
+      };
+      function renderLessonCards(lessons) {
+        if (!lessons.length) return '<div class="empty-state"><i class="fas fa-calendar-check"></i>Нет занятий</div>';
+        return lessons.map(l => {
+          const s = getStudent(l.studentId);
+          const isC = l.status === 'completed';
+          const isX = l.status === 'cancelled';
+          let cls = 'lesson-card';
+          if (isC) cls += ' completed';
+          if (isX) cls += ' cancelled';
+         
+          let actions = '';
+          if (!isC && !isX) {
+            // Запланировано: отметить проведённым или отменить
+            actions = `
+              <button class="action-btn btn-complete" title="Проведено" onclick="changeStatus('${l.id}','completed')">✓</button>
+              <button class="action-btn btn-cancel" title="Отменить" onclick="changeStatus('${l.id}','cancelled')">✕</button>`;
+          } else {
+            // Проведено или отменено: вернуть в план + удалить
+            actions = `
+              <button class="action-btn btn-restore" title="Вернуть в план" onclick="changeStatus('${l.id}','planned')">↩</button>
+              <button class="action-btn btn-delete" title="Удалить запись" onclick="deleteLesson('${l.id}', true)"><i class="fas fa-trash"></i></button>`;
+          }
+         
+          const statusText = l.status === 'completed' ? 'Проведено' : l.status === 'cancelled' ? 'Отменено' : 'Запланировано';
+          const dur = l.duration || 45;
+          const endT = calcEndTime(l.time, dur);
+         
+          return `
+            <div class="${cls}">
+              <div class="lesson-info">
+                <div class="name">${s?.name || '—'}</div>
+                <div class="meta">${l.date} · ${l.time}–${endT} (${dur} мин) <span class="status-dot ${l.status}"></span>${statusText}</div>
+                ${l.topic ? `<div class="topic">${l.topic}</div>` : ''}
+              </div>
+              <div class="lesson-actions">
+                ${actions}
+                ${!isC && !isX ? `
+                  <button class="action-btn btn-edit" onclick="editLesson('${l.id}')"><i class="fas fa-pen"></i></button>
+                  <button class="action-btn btn-delete" onclick="deleteLesson('${l.id}')"><i class="fas fa-trash"></i></button>
+                ` : `
+                  <button class="action-btn btn-edit" onclick="editLesson('${l.id}')"><i class="fas fa-pen"></i></button>
+                `}
+              </div>
+            </div>`;
+        }).join('');
+      }
+      window.changeStatus = function(id, status) {
+        const l = data.lessons.find(x => x.id === id);
+        if (!l) return;
+        const prev = l.status;
+        l.status = status;
+
+        // Списание / возврат занятия в абонемент:
+        // −1 только при переходе в «проведено»
+        // +1 только при возврате из «проведено» в «запланировано»
+        // Отмена (cancelled) абонемент не трогает
+        const ab = data.abonements.find(a => a.studentId === l.studentId);
+        if (status === 'completed' && prev !== 'completed') {
+          if (ab && (ab.totalLessons - ab.usedLessons) > 0) {
+            ab.usedLessons++;
+            toast('✅ Проведено (−1 с абонемента)');
+          } else {
+            toast('✅ Проведено');
+          }
+        } else if (prev === 'completed' && status === 'planned') {
+          if (ab && ab.usedLessons > 0) {
+            ab.usedLessons--;
+            toast('🔄 Восстановлено (+1 в абонемент)');
+          } else {
+            toast('🔄 Восстановлено');
+          }
+        } else if (status === 'cancelled') {
+          toast('❌ Отменено');
+        } else {
+          toast('🔄 Восстановлено');
+        }
+        saveData();
+        renderView(currentView);
+      };
+      window.clearFinishedLessons = function() {
+        const count = data.lessons.filter(l => l.status === 'completed' || l.status === 'cancelled').length;
+        if (!count) { toast('Нет проведённых/отменённых'); return; }
+        if (confirm(`Удалить все проведённые и отменённые занятия (${count} шт.)?`)) {
+          data.lessons = data.lessons.filter(l => l.status === 'planned');
+          saveData();
+          renderView(currentView);
+          toast('🗑️ Очищено: ' + count);
+        }
+      };
+      // ====== УЧЕНИКИ ======
+      function renderStudents() {
+        document.getElementById('pageTitle').textContent = '👥 Ученики';
+        let items = data.students.map(s => {
+          const ab = data.abonements.find(a => a.studentId === s.id);
+          const rem = ab ? ab.totalLessons - ab.usedLessons : 0;
+          return `
+            <div class="list-item">
+              <div class="info">
+                <div class="name">${s.name}</div>
+                <div class="sub">${s.phone || 'Нет телефона'} · ${s.email || 'Нет email'}</div>
+                <div class="sub">Абонемент: ${ab ? `<span class="badge ${rem<=1?'warning':'success'}">${rem} занятий</span>` : '<span class="badge">нет</span>'}</div>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button class="action-btn btn-edit" onclick="editStudent('${s.id}')"><i class="fas fa-pen"></i></button>
+                <button class="action-btn btn-delete" onclick="deleteStudent('${s.id}')"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>`;
+        }).join('');
+        document.getElementById('mainContent').innerHTML = `
+          <button class="header-btn" style="position:fixed; bottom:80px; right:16px; z-index:50; width:50px; height:50px; font-size:1.4rem;" onclick="openStudentModal()">
+            <i class="fas fa-plus"></i>
+          </button>
+          ${items || '<div class="empty-state"><i class="fas fa-user-graduate"></i>Нет учеников</div>'}`;
+      }
+      // ====== АБОНЕМЕНТЫ ======
+      function renderAbonements() {
+        document.getElementById('pageTitle').textContent = '🎫 Абонементы';
+        const finishedCount = data.abonements.filter(a => (a.totalLessons - a.usedLessons) <= 0).length;
+        let items = data.abonements.map(a => {
+          const s = getStudent(a.studentId);
+          const rem = a.totalLessons - a.usedLessons;
+          const finished = rem <= 0;
+          return `
+            <div class="list-item" style="${finished ? 'opacity:0.75; border-color:#fca5a5;' : ''}">
+              <div class="info">
+                <div class="name">${s?.name || '—'}${finished ? ' <span class="badge cancelled">закончился</span>' : ''}</div>
+                <div class="sub">Всего: ${a.totalLessons} · Исп: ${a.usedLessons} · Ост: <span class="badge ${finished ? 'cancelled' : rem<=1?'warning':'success'}">${rem}</span></div>
+                <div class="sub">Куплен: ${a.purchaseDate || '—'} · До: ${a.expiry || '—'}</div>
+              </div>
+              <div style="display:flex; gap:6px;">
+                ${!finished ? `<button class="action-btn btn-complete" onclick="useLesson('${a.id}')">−1</button>` : ''}
+                <button class="action-btn btn-delete" onclick="deleteAbonement('${a.id}')"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>`;
+        }).join('');
+        document.getElementById('mainContent').innerHTML = `
+          ${finishedCount ? `<button class="filter-chip" style="margin-bottom:10px; border-color:#fca5a5; color:#b91c1c;" onclick="clearFinishedAbonements()">🗑️ Удалить закончившиеся (${finishedCount})</button>` : ''}
+          <button class="header-btn" style="position:fixed; bottom:80px; right:16px; z-index:50; width:50px; height:50px; font-size:1.4rem;" onclick="openAbonementModal()">
+            <i class="fas fa-plus"></i>
+          </button>
+          ${items || '<div class="empty-state"><i class="fas fa-ticket-alt"></i>Нет абонементов</div>'}`;
+      }
+      window.useLesson = function(abId) {
+        const a = data.abonements.find(x => x.id === abId);
+        if (!a) return;
+        if (a.totalLessons - a.usedLessons > 0) {
+          a.usedLessons++;
+          saveData(); renderAbonements();
+          toast(`−1 занятие. Осталось: ${a.totalLessons - a.usedLessons}`);
+        } else toast('Занятия закончились');
+      };
+      window.deleteAbonement = function(id) {
+        if (confirm('Удалить абонемент?')) {
+          data.abonements = data.abonements.filter(a => a.id !== id);
+          saveData(); renderAbonements(); toast('Удалено');
+        }
+      };
+      window.clearFinishedAbonements = function() {
+        const count = data.abonements.filter(a => (a.totalLessons - a.usedLessons) <= 0).length;
+        if (!count) { toast('Нет закончившихся'); return; }
+        if (confirm(`Удалить все закончившиеся абонементы (${count} шт.)?`)) {
+          data.abonements = data.abonements.filter(a => (a.totalLessons - a.usedLessons) > 0);
+          saveData(); renderAbonements(); toast('🗑️ Удалено: ' + count);
+        }
+      };
+      // ====== КАЛЕНДАРЬ ======
+      function renderCalendar(year, month) {
+        document.getElementById('pageTitle').textContent = '📅 Календарь';
+        const now = new Date();
+        if (year === undefined) year = now.getFullYear();
+        if (month === undefined) month = now.getMonth();
+        // Нормализация месяца
+        while (month < 0) { year--; month += 12; }
+        while (month > 11) { year++; month -= 12; }
+        calYear = year;
+        calMonth = month;
+        const todayStr = now.toISOString().split('T')[0];
+        const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+        const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+        const firstDay = new Date(calYear, calMonth, 1).getDay();
+        const prevDays = firstDay === 0 ? 6 : firstDay - 1;
+       
+        let daysHtml = '';
+        for (let i=0; i<prevDays; i++) daysHtml += '<div class="day-cell other"></div>';
+        for (let d=1; d<=daysInMonth; d++) {
+          const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+          const has = data.lessons.some(l => l.date === dateStr);
+          let cls = 'day-cell';
+          if (dateStr === todayStr) cls += ' today';
+          if (dateStr === selectedDate) cls += ' selected';
+          if (has) cls += ' has-lesson';
+          daysHtml += `<div class="${cls}" onclick="selectCalDate('${dateStr}')">${d}</div>`;
+        }
+       
+        const dayLessons = data.lessons.filter(l => l.date === selectedDate);
+       
+        document.getElementById('mainContent').innerHTML = `
+          <div class="panel">
+            <div class="cal-nav">
+              <button onclick="renderCalendar(${calYear},${calMonth-1})">←</button>
+              <span class="month-title">${monthNames[calMonth]} ${calYear}</span>
+              <button onclick="renderCalendar(${calYear},${calMonth+1})">→</button>
+            </div>
+            <div class="weekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+            <div class="days-grid">${daysHtml}</div>
+            <div style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong>${selectedDate}</strong>
+                <button class="filter-chip active" onclick="openLessonModal('${selectedDate}')">+ Занятие</button>
+              </div>
+              <div style="margin-top:8px;">${renderLessonCards(dayLessons)}</div>
+            </div>
+          </div>`;
+      }
+      window.selectCalDate = function(dateStr) {
+        selectedDate = dateStr;
+        renderCalendar(calYear, calMonth);
+      };
+      // ====== МОДАЛЬНЫЕ ОКНА ======
+      function openModal(html) {
+        document.getElementById('modalContent').innerHTML = html;
+        document.getElementById('modalOverlay').classList.remove('hidden');
+      }
+      window.closeModal = function() {
+        document.getElementById('modalOverlay').classList.add('hidden');
+      };
+      document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+      function calcEndTime(start, durationMin) {
+        if (!start) return '—';
+        const [h, m] = start.split(':').map(Number);
+        const total = h * 60 + m + (durationMin || 45);
+        const eh = Math.floor(total / 60) % 24;
+        const em = total % 60;
+        return String(eh).padStart(2, '0') + ':' + String(em).padStart(2, '0');
+      }
+      window.updateEndTimePreview = function() {
+        const start = document.getElementById('lTime')?.value;
+        const dur = parseInt(document.getElementById('lDuration')?.value) || 45;
+        const el = document.getElementById('lEndPreview');
+        if (el) el.textContent = calcEndTime(start, dur);
+      };
+      window.setDuration = function(min) {
+        const inp = document.getElementById('lDuration');
+        if (inp) inp.value = min;
+        document.querySelectorAll('.dur-chip').forEach(c => {
+          c.classList.toggle('active', parseInt(c.dataset.dur) === min);
+        });
+        updateEndTimePreview();
+      };
+      window.openLessonModal = function(dateStr = null) {
+        if (!data.students.length) { toast('Сначала добавьте учеников'); return; }
+        const opts = data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        const defDate = dateStr || new Date().toISOString().split('T')[0];
+        openModal(`
+          <h3>Новое занятие</h3>
+          <select id="lStudent">${opts}</select>
+          <input id="lDate" type="date" value="${defDate}">
+          <div style="margin-bottom:10px;">
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:6px;">Длительность</div>
+            <div class="filter-row" style="margin-bottom:0;">
+              <button type="button" class="filter-chip dur-chip active" data-dur="45" onclick="setDuration(45)">45 мин</button>
+              <button type="button" class="filter-chip dur-chip" data-dur="75" onclick="setDuration(75)">75 мин</button>
+            </div>
+            <input type="hidden" id="lDuration" value="45">
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+            <div style="flex:1;">
+              <div style="font-size:0.75rem; color:#64748b; margin-bottom:4px;">Начало</div>
+              <input id="lTime" type="time" value="15:00" onchange="updateEndTimePreview()" oninput="updateEndTimePreview()" style="margin-bottom:0;">
+            </div>
+            <div style="font-size:1.2rem; color:#94a3b8; padding-top:18px;">→</div>
+            <div style="flex:1;">
+              <div style="font-size:0.75rem; color:#64748b; margin-bottom:4px;">Конец</div>
+              <div id="lEndPreview" style="padding:12px 14px; background:#f1f5f9; border-radius:12px; font-weight:600; font-size:0.95rem;">15:45</div>
+            </div>
+          </div>
+          <input id="lTopic" placeholder="Тема занятия">
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveLesson()">Сохранить</button>
+            <button class="btn-cancel-modal" onclick="closeModal()">Отмена</button>
+          </div>`);
+        setTimeout(updateEndTimePreview, 0);
+      };
+      window.saveLesson = function() {
+        const sid = document.getElementById('lStudent')?.value;
+        if (!sid) { toast('Выберите ученика'); return; }
+        const duration = parseInt(document.getElementById('lDuration').value) || 45;
+        data.lessons.push({
+          id: genId(),
+          studentId: sid,
+          date: document.getElementById('lDate').value,
+          time: document.getElementById('lTime').value,
+          duration: duration,
+          topic: document.getElementById('lTopic').value,
+          status: 'planned'
+        });
+        saveData(); closeModal(); renderView(currentView); toast('✅ Добавлено');
+      };
+      window.editLesson = function(id) {
+        const l = data.lessons.find(x => x.id === id);
+        if (!l) return;
+        const dur = l.duration || 45;
+        const opts = data.students.map(s => `<option value="${s.id}" ${s.id===l.studentId?'selected':''}>${s.name}</option>`).join('');
+        openModal(`
+          <h3>Редактировать</h3>
+          <select id="lStudent">${opts}</select>
+          <input id="lDate" type="date" value="${l.date}">
+          <div style="margin-bottom:10px;">
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:6px;">Длительность</div>
+            <div class="filter-row" style="margin-bottom:0;">
+              <button type="button" class="filter-chip dur-chip ${dur===45?'active':''}" data-dur="45" onclick="setDuration(45)">45 мин</button>
+              <button type="button" class="filter-chip dur-chip ${dur===75?'active':''}" data-dur="75" onclick="setDuration(75)">75 мин</button>
+            </div>
+            <input type="hidden" id="lDuration" value="${dur}">
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+            <div style="flex:1;">
+              <div style="font-size:0.75rem; color:#64748b; margin-bottom:4px;">Начало</div>
+              <input id="lTime" type="time" value="${l.time}" onchange="updateEndTimePreview()" oninput="updateEndTimePreview()" style="margin-bottom:0;">
+            </div>
+            <div style="font-size:1.2rem; color:#94a3b8; padding-top:18px;">→</div>
+            <div style="flex:1;">
+              <div style="font-size:0.75rem; color:#64748b; margin-bottom:4px;">Конец</div>
+              <div id="lEndPreview" style="padding:12px 14px; background:#f1f5f9; border-radius:12px; font-weight:600; font-size:0.95rem;">${calcEndTime(l.time, dur)}</div>
+            </div>
+          </div>
+          <input id="lTopic" placeholder="Тема" value="${l.topic||''}">
+          <select id="lStatus">
+            <option value="planned" ${l.status==='planned'?'selected':''}>Запланировано</option>
+            <option value="completed" ${l.status==='completed'?'selected':''}>Проведено</option>
+            <option value="cancelled" ${l.status==='cancelled'?'selected':''}>Отменено</option>
+          </select>
+          <div class="btn-row">
+            <button class="btn-save" onclick="updateLesson('${id}')">Сохранить</button>
+            <button class="btn-cancel-modal" onclick="closeModal()">Отмена</button>
+          </div>`);
+      };
+      window.updateLesson = function(id) {
+        const l = data.lessons.find(x => x.id === id);
+        if (!l) return;
+        l.studentId = document.getElementById('lStudent').value;
+        l.date = document.getElementById('lDate').value;
+        l.time = document.getElementById('lTime').value;
+        l.duration = parseInt(document.getElementById('lDuration').value) || 45;
+        l.topic = document.getElementById('lTopic').value;
+        l.status = document.getElementById('lStatus').value;
+        saveData(); closeModal(); renderView(currentView); toast('✅ Обновлено');
+      };
+      window.deleteLesson = function(id, skipConfirm) {
+        if (skipConfirm || confirm('Удалить занятие?')) {
+          data.lessons = data.lessons.filter(l => l.id !== id);
+          saveData(); renderView(currentView); toast('🗑️ Удалено');
+        }
+      };
+      window.openStudentModal = function(id = null) {
+        const s = id ? data.students.find(x => x.id === id) : null;
+        openModal(`
+          <h3>${s ? 'Редактировать' : 'Новый ученик'}</h3>
+          <input id="sName" placeholder="Имя ученика" value="${s?.name||''}">
+          <input id="sPhone" placeholder="Телефон" value="${s?.phone||''}">
+          <input id="sEmail" placeholder="Email" value="${s?.email||''}">
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveStudent('${id||''}')">Сохранить</button>
+            <button class="btn-cancel-modal" onclick="closeModal()">Отмена</button>
+          </div>`);
+      };
+      window.saveStudent = function(id) {
+        const name = document.getElementById('sName').value.trim();
+        if (!name) { toast('Введите имя'); return; }
+        if (id) {
+          const s = data.students.find(x => x.id === id);
+          if (s) { s.name = name; s.phone = document.getElementById('sPhone').value; s.email = document.getElementById('sEmail').value; }
+        } else {
+          data.students.push({ id: genId(), name, phone: document.getElementById('sPhone').value, email: document.getElementById('sEmail').value });
+        }
+        saveData(); closeModal(); renderView(currentView); toast('✅ Сохранено');
+      };
+      window.editStudent = (id) => openStudentModal(id);
+     
+      window.deleteStudent = function(id) {
+        if (confirm('Удалить ученика и все его данные?')) {
+          data.students = data.students.filter(s => s.id !== id);
+          data.abonements = data.abonements.filter(a => a.studentId !== id);
+          data.lessons = data.lessons.filter(l => l.studentId !== id);
+          saveData(); renderView(currentView); toast('🗑️ Удалено');
+        }
+      };
+      window.openAbonementModal = function() {
+        if (!data.students.length) { toast('Добавьте учеников'); return; }
+        const opts = data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        openModal(`
+          <h3>Новый абонемент</h3>
+          <select id="aStudent">${opts}</select>
+          <input id="aTotal" type="number" value="4" min="1" placeholder="Количество занятий">
+          <input id="aExpiry" type="date" placeholder="Действует до">
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveAbonement()">Создать</button>
+            <button class="btn-cancel-modal" onclick="closeModal()">Отмена</button>
+          </div>`);
+      };
+      window.saveAbonement = function() {
+        data.abonements.push({
+          id: genId(),
+          studentId: document.getElementById('aStudent').value,
+          totalLessons: parseInt(document.getElementById('aTotal').value) || 4,
+          usedLessons: 0,
+          purchaseDate: new Date().toISOString().split('T')[0],
+          expiry: document.getElementById('aExpiry').value
+        });
+        saveData(); closeModal(); renderView('abonements'); toast('✅ Создано');
+      };
+      // Экспорт/импорт
+      window.exportData = function() {
+        const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `crm_backup_${new Date().toISOString().split('T')[0]}.json`;
+        a.click(); toast('📥 Скачано');
+      };
+      window.handleImport = function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          try {
+            const imp = JSON.parse(ev.target.result);
+            if (imp.students && imp.lessons && imp.abonements) {
+              if (confirm('Заменить все данные импортированными?')) {
+                data = imp; saveData(); renderView(currentView); toast('✅ Импортировано');
+              }
+            } else toast('Неверный формат файла');
+          } catch(ex) { toast('Ошибка чтения файла'); }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+      };
+      // Инициализация
+      loadData();
+      renderView('dashboard');
+    })();
+  </script>
+</body>
+</html>

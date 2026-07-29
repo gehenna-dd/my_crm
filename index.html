@@ -858,21 +858,31 @@
         document.getElementById('mainContent').innerHTML = `
           <div class="panel">
             <div class="cal-nav">
-              <button onclick="renderCalendar(${calYear},${calMonth-1})">←</button>
+              <button type="button" id="calPrevBtn">←</button>
               <span class="month-title">${monthNames[calMonth]} ${calYear}</span>
-              <button onclick="renderCalendar(${calYear},${calMonth+1})">→</button>
+              <button type="button" id="calNextBtn">→</button>
             </div>
             <div class="weekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
             <div class="days-grid">${daysHtml}</div>
             <div style="margin-top:14px;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <strong>${selectedDate}</strong>
-                <button class="filter-chip active" onclick="openLessonModal('${selectedDate}')">+ Занятие</button>
+                <button type="button" class="filter-chip active" onclick="openLessonModal('${selectedDate}')">+ Занятие</button>
               </div>
               <div style="margin-top:8px;">${renderLessonCards(dayLessons)}</div>
             </div>
           </div>`;
+        // Привязка стрелок после вставки HTML (надёжнее, чем inline onclick)
+        const prevBtn = document.getElementById('calPrevBtn');
+        const nextBtn = document.getElementById('calNextBtn');
+        if (prevBtn) prevBtn.addEventListener('click', function() {
+          renderCalendar(calYear, calMonth - 1);
+        });
+        if (nextBtn) nextBtn.addEventListener('click', function() {
+          renderCalendar(calYear, calMonth + 1);
+        });
       }
+      window.renderCalendar = renderCalendar;
       window.selectCalDate = function(dateStr) {
         selectedDate = dateStr;
         renderCalendar(calYear, calMonth);

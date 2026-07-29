@@ -450,6 +450,41 @@
       margin-bottom: 8px;
       display: block;
     }
+    .day-group {
+      margin-bottom: 14px;
+    }
+    .day-group-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 4px 6px;
+      margin-bottom: 6px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .day-group-header .day-date {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .day-group-header .day-weekday {
+      font-size: 0.8rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .day-group-header .day-count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .day-group-header.today-header {
+      border-bottom-color: #2563eb;
+    }
+    .day-group-header.today-header .day-date {
+      color: #2563eb;
+    }
   </style>
 </head>
 <body>
@@ -659,51 +694,92 @@
         dashFilter[key] = value;
         renderDashboard();
       };
+      function formatDateRu(iso) {
+        if (!iso) return '—';
+        const [y, m, d] = iso.split('-');
+        return `${d}.${m}.${y}`;
+      }
+      function weekdayRu(iso) {
+        const names = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+        const dt = new Date(iso + 'T12:00:00');
+        return names[dt.getDay()];
+      }
+      function renderOneLessonCard(l) {
+        const s = getStudent(l.studentId);
+        const isC = l.status === 'completed';
+        const isX = l.status === 'cancelled';
+        let cls = 'lesson-card';
+        if (isC) cls += ' completed';
+        if (isX) cls += ' cancelled';
+
+        let actions = '';
+        if (!isC && !isX) {
+          actions = `
+            <button class="action-btn btn-complete" title="Проведено" onclick="changeStatus('${l.id}','completed')">✓</button>
+            <button class="action-btn btn-cancel" title="Отменить" onclick="changeStatus('${l.id}','cancelled')">✕</button>`;
+        } else {
+          actions = `
+            <button class="action-btn btn-restore" title="Вернуть в план" onclick="changeStatus('${l.id}','planned')">↩</button>
+            <button class="action-btn btn-delete" title="Удалить запись" onclick="deleteLesson('${l.id}', true)"><i class="fas fa-trash"></i></button>`;
+        }
+
+        const statusText = l.status === 'completed' ? 'Проведено' : l.status === 'cancelled' ? 'Отменено' : 'Запланировано';
+        const dur = l.duration || 45;
+        const endT = calcEndTime(l.time, dur);
+
+        return `
+          <div class="${cls}">
+            <div class="lesson-info">
+              <div class="name">${s?.name || '—'}</div>
+              <div class="meta">${l.time}–${endT} (${dur} мин) <span class="status-dot ${l.status}"></span>${statusText}</div>
+              ${l.topic ? `<div class="topic">${l.topic}</div>` : ''}
+            </div>
+            <div class="lesson-actions">
+              ${actions}
+              ${!isC && !isX ? `
+                <button class="action-btn btn-edit" onclick="editLesson('${l.id}')"><i class="fas fa-pen"></i></button>
+                <button class="action-btn btn-delete" onclick="deleteLesson('${l.id}')"><i class="fas fa-trash"></i></button>
+              ` : `
+                <button class="action-btn btn-edit" onclick="editLesson('${l.id}')"><i class="fas fa-pen"></i></button>
+              `}
+            </div>
+          </div>`;
+      }
       function renderLessonCards(lessons) {
         if (!lessons.length) return '<div class="empty-state"><i class="fas fa-calendar-check"></i>Нет занятий</div>';
-        return lessons.map(l => {
-          const s = getStudent(l.studentId);
-          const isC = l.status === 'completed';
-          const isX = l.status === 'cancelled';
-          let cls = 'lesson-card';
-          if (isC) cls += ' completed';
-          if (isX) cls += ' cancelled';
-         
-          let actions = '';
-          if (!isC && !isX) {
-            // Запланировано: отметить проведённым или отменить
-            actions = `
-              <button class="action-btn btn-complete" title="Проведено" onclick="changeStatus('${l.id}','completed')">✓</button>
-              <button class="action-btn btn-cancel" title="Отменить" onclick="changeStatus('${l.id}','cancelled')">✕</button>`;
-          } else {
-            // Проведено или отменено: вернуть в план + удалить
-            actions = `
-              <button class="action-btn btn-restore" title="Вернуть в план" onclick="changeStatus('${l.id}','planned')">↩</button>
-              <button class="action-btn btn-delete" title="Удалить запись" onclick="deleteLesson('${l.id}', true)"><i class="fas fa-trash"></i></button>`;
+
+        // Группировка по дате (уроки уже отсортированы)
+        const groups = {};
+        const order = [];
+        lessons.forEach(l => {
+          if (!groups[l.date]) {
+            groups[l.date] = [];
+            order.push(l.date);
           }
-         
-          const statusText = l.status === 'completed' ? 'Проведено' : l.status === 'cancelled' ? 'Отменено' : 'Запланировано';
-          const dur = l.duration || 45;
-          const endT = calcEndTime(l.time, dur);
-         
+          groups[l.date].push(l);
+        });
+
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        return order.map(date => {
+          const list = groups[date];
+          const isToday = date === todayStr;
           return `
-            <div class="${cls}">
-              <div class="lesson-info">
-                <div class="name">${s?.name || '—'}</div>
-                <div class="meta">${l.date} · ${l.time}–${endT} (${dur} мин) <span class="status-dot ${l.status}"></span>${statusText}</div>
-                ${l.topic ? `<div class="topic">${l.topic}</div>` : ''}
+            <div class="day-group">
+              <div class="day-group-header ${isToday ? 'today-header' : ''}">
+                <span class="day-date">${formatDateRu(date)}</span>
+                <span class="day-weekday">${weekdayRu(date)}${isToday ? ' · сегодня' : ''}</span>
+                <span class="day-count">${list.length} ${list.length === 1 ? 'урок' : list.length < 5 ? 'урока' : 'уроков'}</span>
               </div>
-              <div class="lesson-actions">
-                ${actions}
-                ${!isC && !isX ? `
-                  <button class="action-btn btn-edit" onclick="editLesson('${l.id}')"><i class="fas fa-pen"></i></button>
-                  <button class="action-btn btn-delete" onclick="deleteLesson('${l.id}')"><i class="fas fa-trash"></i></button>
-                ` : `
-                  <button class="action-btn btn-edit" onclick="editLesson('${l.id}')"><i class="fas fa-pen"></i></button>
-                `}
-              </div>
+              ${list.map(renderOneLessonCard).join('')}
             </div>`;
         }).join('');
+      }
+      // Активный абонемент ученика (есть оставшиеся занятия)
+      function findActiveAbonement(studentId) {
+        return data.abonements.find(a =>
+          a.studentId === studentId && (a.totalLessons - a.usedLessons) > 0
+        ) || null;
       }
       window.changeStatus = function(id, status) {
         const l = data.lessons.find(x => x.id === id);
@@ -712,24 +788,36 @@
         l.status = status;
 
         // Списание / возврат занятия в абонемент:
-        // −1 только при переходе в «проведено»
-        // +1 только при возврате из «проведено» в «запланировано»
+        // −1 только с АКТИВНОГО абонемента при «проведено»
+        // +1 только в тот абонемент, с которого списали, при возврате в план
         // Отмена (cancelled) абонемент не трогает
-        const ab = data.abonements.find(a => a.studentId === l.studentId);
+        // Законченные абонементы (0 оставшихся) полностью игнорируются
         if (status === 'completed' && prev !== 'completed') {
-          if (ab && (ab.totalLessons - ab.usedLessons) > 0) {
+          const ab = findActiveAbonement(l.studentId);
+          if (ab) {
             ab.usedLessons++;
+            l.abonementId = ab.id; // запоминаем, с какого списали
             toast('✅ Проведено (−1 с абонемента)');
           } else {
-            toast('✅ Проведено');
+            delete l.abonementId;
+            toast('✅ Проведено (нет активного абонемента)');
           }
         } else if (prev === 'completed' && status === 'planned') {
+          // Возвращаем в тот абонемент, с которого списывали
+          let ab = l.abonementId
+            ? data.abonements.find(a => a.id === l.abonementId)
+            : null;
+          // если старый закончившийся уже удалён — ищем любой с usedLessons > 0
+          if (!ab || ab.usedLessons <= 0) {
+            ab = data.abonements.find(a => a.studentId === l.studentId && a.usedLessons > 0) || null;
+          }
           if (ab && ab.usedLessons > 0) {
             ab.usedLessons--;
             toast('🔄 Восстановлено (+1 в абонемент)');
           } else {
             toast('🔄 Восстановлено');
           }
+          delete l.abonementId;
         } else if (status === 'cancelled') {
           toast('❌ Отменено');
         } else {
@@ -866,7 +954,7 @@
             <div class="days-grid">${daysHtml}</div>
             <div style="margin-top:14px;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong>${selectedDate}</strong>
+                <strong style="font-size:1.05rem;">${formatDateRu(selectedDate)}</strong>
                 <button type="button" class="filter-chip active" onclick="openLessonModal('${selectedDate}')">+ Занятие</button>
               </div>
               <div style="margin-top:8px;">${renderLessonCards(dayLessons)}</div>
